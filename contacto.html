@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto | Gerard Soler</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e7eb; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6 !important;
+            background: rgba(59, 130, 246, 0.05) !important;
+        }
+        
+        .error-message { color: #ef4444; font-size: 0.75rem; margin-top: 0.25rem; display: none; }
+        .is-invalid { border-color: #ef4444 !important; }
+
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- HEADER -->
+    <header class="fixed top-0 w-full z-50 glass py-4 px-6">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <h1 class="text-xs font-bold tracking-[0.3em] uppercase opacity-70 italic">
+                Gerard Soler <span class="text-blue-500">/</span> Contacto
+            </h1>
+            <nav class="hidden md:flex items-center gap-8 text-[10px] font-black uppercase tracking-widest">
+                <a href="perfil.html" class="hover:text-blue-500 transition-colors">Inicio</a>
+                <a href="proyectos.html" class="hover:text-blue-500 transition-colors">Proyectos</a>
+                <a href="contacto.html" class="text-blue-500 font-bold underline decoration-blue-500/30 underline-offset-4">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- NAVBAR MÓVIL -->
+    <nav class="md:hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[320px]">
+        <div class="glass rounded-[2rem] py-3 px-8 flex justify-between items-center border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+           <a href="perfil.html" class="flex flex-col items-center gap-1">
+                <i class="fas fa-home text-gray-400 text-sm"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-gray-400">Inicio</span>
+            </a>
+            <div class="w-px h-6 bg-white/10"></div>
+            <a href="proyectos.html" class="flex flex-col items-center gap-1">
+                <i class="fas fa-code text-gray-400 text-sm"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-gray-400">Proyectos</span>
+            </a>
+            <div class="w-px h-6 bg-white/10"></div>
+            <a href="contacto.html" class="flex flex-col items-center gap-1">
+                <i class="fas fa-envelope text-blue-500 text-sm"></i>
+                <span class="text-[8px] font-black uppercase tracking-widest text-white">Contacto</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- CONTENIDO DE CONTACTO -->
+    <main class="flex-grow container mx-auto px-6 pt-32 pb-24 md:pt-48">
+        <div class="max-w-4xl mx-auto">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                
+                <!-- Columna Izquierda: Mensaje -->
+                <div class="animate-slide-up">
+                    <h2 class="text-5xl md:text-7xl font-black italic tracking-tighter text-white mb-6 leading-none">
+                        ¿Hablamos <br> <span class="text-blue-500">ahora?</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg font-light leading-relaxed mb-8">
+                        Tienes una idea, un proyecto o simplemente quieres saludar. Mi bandeja de entrada está siempre abierta para propuestas interesantes.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                                <i class="fas fa-map-marker-alt text-blue-500"></i>
+                            </div>
+                            <span class="text-sm font-bold uppercase tracking-widest">Valencia, Puzol</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                                <i class="fas fa-envelope text-blue-500"></i>
+                            </div>
+                            <span class="text-sm font-bold uppercase tracking-widest">gersolalm@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Formulario -->
+                <div class="glass p-8 md:p-10 rounded-[2.5rem] animate-slide-up" style="animation-delay: 0.2s;">
+                    <form id="contactForm" class="space-y-6" novalidate>
+                        
+                        <!-- Nombre -->
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 ml-1">Nombre Completo</label>
+                            <input type="text" id="name" name="name" placeholder="Ej. Juan Pérez" 
+                                   class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm transition-all">
+                            <span class="error-message" id="nameError">Por favor, introduce tu nombre.</span>
+                        </div>
+
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 ml-1">Email de contacto</label>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" 
+                                   class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm transition-all">
+                            <span class="error-message" id="emailError">Introduce un email válido.</span>
+                        </div>
+
+                        <!-- Mensaje -->
+                        <div>
+                            <label class="block text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2 ml-1">Tu mensaje</label>
+                            <textarea id="message" name="message" rows="4" placeholder="¿En qué puedo ayudarte?" 
+                                      class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm transition-all resize-none"></textarea>
+                            <span class="error-message" id="messageError">El mensaje no puede estar vacío.</span>
+                        </div>
+
+                        <!-- Botón Enviar -->
+                        <button type="submit" id="submitBtn" 
+                                class="w-full group flex items-center justify-center gap-3 bg-white text-black py-5 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all transform active:scale-95 shadow-xl">
+                            <i class="fas fa-paper-plane group-hover:translate-x-1 transition-transform"></i>
+                            Enviar Mensaje
+                        </button>
+                    </form>
+
+                    <!-- Mensaje de Éxito -->
+                    <div id="successMessage" class="hidden text-center py-10">
+                        <div class="w-20 h-20 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-check text-3xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-black italic mb-2">¡Enviado con éxito!</h4>
+                        <p class="text-gray-400 text-sm">Te responderé lo antes posible.</p>
+                        <button onclick="location.reload()" class="mt-8 text-[10px] font-black uppercase tracking-widest text-blue-500 border-b border-blue-500/30">Enviar otro mensaje</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-10 text-center text-gray-700 text-[10px] uppercase tracking-widest">
+        Gerard Soler / 2026 / Valencia
+    </footer>
+
+    <!-- SCRIPT DE VALIDACIÓN Y ENVÍO CON EMAILJS -->
+    <script src="contacto.js"></script>
+</body>
+</html>
